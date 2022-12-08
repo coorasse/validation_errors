@@ -1,0 +1,7 @@
+select validation_errors.invalid_model_name,
+       validation_errors.invalid_model_id,
+       validation_errors.action,
+       validation_errors.created_at,
+       json_data.key as error_column,
+       json_array_elements(json_data.value)->>'error' as error_type
+from validation_errors, json_each(validation_errors.details) as json_data

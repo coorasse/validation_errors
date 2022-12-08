@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/validation_errors"
-
 Gem::Specification.new do |spec|
   spec.name = "validation_errors"
-  spec.version = ValidationErrors::VERSION
+  spec.version = "0.1.0"
   spec.authors = ["Alessandro Rodi"]
-  spec.email = ["coorasse@gmail.com"]
+  spec.email = ["rodi@hey.com"]
 
   spec.summary = "Track ActiveRecord validation errors on database"
   spec.description = "Easily track all the validation errors on your database so that you can analyse them."
@@ -17,6 +15,7 @@ Gem::Specification.new do |spec|
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/coorasse/validation_errors"
   spec.metadata["changelog_uri"] = "https://github.com/coorasse/validation_errors/blob/main/CHANGELOG.md"
+  spec.metadata["funding_uri"] = "https://github.com/sponsors/coorasse"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -30,15 +29,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Uncomment to register a new dependency of your gem
-  # spec.add_dependency "example-gem", "~> 1.0"
   spec.add_dependency "activerecord", ">= 4.1.0"
+  spec.add_dependency "zeitwerk", ">= 2.0.0"
 
-  spec.add_development_dependency "sqlite3", "~> 1.4.0"
-  spec.add_development_dependency "pg", "~> 1.4.0"
+  spec.add_development_dependency "sqlite3", "~> 1.5.0"
   spec.add_development_dependency "standard", "~> 0.13.0"
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "minitest", "~> 5.0"
-
-  # For more information and examples about making a new gem, check out our
-  # guide at: https://bundler.io/guides/creating_gem.html
 end

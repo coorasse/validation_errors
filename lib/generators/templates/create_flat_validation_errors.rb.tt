@@ -1,0 +1,5 @@
+class CreateFlatValidationErrors < ActiveRecord::Migration[<%= ActiveRecord::Migration.current_version %>]
+  def change
+    create_view :flat_validation_errors
+  end
+end

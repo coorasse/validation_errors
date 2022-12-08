@@ -3,16 +3,17 @@ PATH
   specs:
     validation_errors (0.1.0)
       activerecord (>= 4.1.0)
+      zeitwerk (>= 2.0.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (7.0.3.1)
-      activesupport (= 7.0.3.1)
-    activerecord (7.0.3.1)
-      activemodel (= 7.0.3.1)
-      activesupport (= 7.0.3.1)
-    activesupport (7.0.3.1)
+    activemodel (7.0.4)
+      activesupport (= 7.0.4)
+    activerecord (7.0.4)
+      activemodel (= 7.0.4)
+      activesupport (= 7.0.4)
+    activesupport (7.0.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -25,7 +26,6 @@ GEM
     parallel (1.22.1)
     parser (3.1.2.1)
       ast (~> 2.4.1)
-    pg (1.4.3)
     rainbow (3.1.1)
     rake (13.0.6)
     regexp_parser (2.5.0)
@@ -45,22 +45,22 @@ GEM
       rubocop (>= 0.90.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     ruby-progressbar (1.11.0)
-    sqlite3 (1.4.2)
+    sqlite3 (1.5.0-arm64-darwin)
     standard (0.13.0)
       rubocop (= 1.10.0)
       rubocop-performance (= 1.9.2)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.3.0)
+    zeitwerk (2.6.0)
 
 PLATFORMS
   arm64-darwin-21
 
 DEPENDENCIES
   minitest (~> 5.0)
-  pg (~> 1.4.0)
   rake (~> 13.0)
-  sqlite3 (~> 1.4.0)
+  sqlite3 (~> 1.5.0)
   standard (~> 0.13.0)
   validation_errors!
 
