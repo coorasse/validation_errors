@@ -173,7 +173,7 @@ or, if you have the view above:
 
 ```sql
 select invalid_model_name, error_column, count(*)
-from validation_errors_flat
+from flat_validation_errors
 group by 1, 2
 ```
 
