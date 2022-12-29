@@ -23,6 +23,15 @@ class TestValidationError < Minitest::Test
     # assert_equal 3, FlatValidationError.count
   end
 
+  def test_that_it_can_track_model_errors_with_custom_action_name
+    invalid_book = Book.new(id: 2)
+    invalid_book.errors.add(:base, :invalid)
+    ValidationError.track(invalid_book, action: "import")
+    assert_equal 1, ValidationError.count
+    assert_equal "Book", ValidationError.first.invalid_model_name
+    assert_equal "import", ValidationError.first.action
+  end
+
   def test_that_models_can_track_on_save
     invalid_book = TrackedBook.new
     invalid_book.save

@@ -72,7 +72,10 @@ def create
 end
 ```
 
-Yes, this will execute an additinoal INSERT into your database. Keep it in mind.
+Yes, this will execute an additional INSERT into your database. Keep it in mind.
+
+`ValidationError.track(@model)` will automatically detect if the action is `create` or `update`. 
+You can also use a custom action name by calling `ValidationError.track(@model, action: 'custom_action')`.  
 
 ### Automatic
 
