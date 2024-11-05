@@ -112,4 +112,25 @@ class TestValidationError < Minitest::Test
     book.update(title: "Harry Potter")
     assert_equal 0, ValidationError.count
   end
+
+  module RailsMock
+    def self.application
+      @application ||= OpenStruct.new(config: OpenStruct.new(filter_parameters: [:password, :ssn]))
+    end
+  end
+
+  def test_that_it_does_not_track_password
+    # Temporarily replace Rails with RailsMock
+    Object.const_set(:Rails, RailsMock)
+
+    invalid_user = User.new(username: "alex", password: "thisissecret")
+    invalid_user.valid?
+    ValidationError.track(invalid_user)
+    assert_equal 1, ValidationError.count
+    assert_equal "User", ValidationError.first.invalid_model_name
+    assert_nil ValidationError.first.invalid_model_id
+    assert_equal "create", ValidationError.first.action
+    assert_equal({"password" => [{"error" => "invalid", "value" => "***"}]}, ValidationError.first.details)
+    assert_equal("thisissecret", invalid_user.errors.details[:password][0][:value])
+  end
 end
