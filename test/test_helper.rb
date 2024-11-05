@@ -8,6 +8,10 @@ require "minitest/autorun"
 class Book < ActiveRecord::Base
 end
 
+class User < ActiveRecord::Base
+  validates :password, format: %r{\A[0-9]+\z}
+end
+
 class TrackedBook < ActiveRecord::Base
   track_validation_errors
 
@@ -26,6 +30,12 @@ ActiveRecord::Schema.define do
   create_table :books, if_not_exists: true do |t|
     t.string :title
     t.string :author
+    t.timestamps null: false
+  end
+
+  create_table :users, if_not_exists: true do |t|
+    t.string :username
+    t.string :password
     t.timestamps null: false
   end
 

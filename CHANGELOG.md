@@ -1,6 +1,7 @@
 ## [0.3.0] - 2024-11-05
 
 - Fix persistance in case of rolled back transactions.
+- Filter sensible information by default
 
 ## [0.2.0] - 2022-12-29
 
