@@ -22,9 +22,22 @@ module ValidationErrors
     end
 
     module InstanceMethods
+      def update(**attributes)
+        super.tap do |result|
+          ValidationError.track(self) unless result
+        end
+      end
+
+      def update!(**attributes)
+        super
+      rescue ActiveRecord::RecordInvalid
+        ValidationError.track(self)
+        raise
+      end
+
       def save(**options)
         super.tap do |result|
-          Thread.new { ValidationError.track(self) }.join unless result
+          ValidationError.track(self) unless result || persisted?
         end
       end
 
@@ -33,7 +46,7 @@ module ValidationErrors
       def save!(**options)
         super
       rescue ActiveRecord::RecordInvalid
-        Thread.new { ValidationError.track(self) }.join
+        ValidationError.track(self) unless persisted?
         raise
       end
     end
