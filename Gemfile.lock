@@ -46,6 +46,7 @@ GEM
       rubocop-ast (>= 0.4.0)
     ruby-progressbar (1.11.0)
     sqlite3 (1.5.0-arm64-darwin)
+    sqlite3 (1.5.0-x86_64-linux)
     standard (0.13.0)
       rubocop (= 1.10.0)
       rubocop-performance (= 1.9.2)
@@ -56,6 +57,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   minitest (~> 5.0)
@@ -65,4 +67,4 @@ DEPENDENCIES
   validation_errors!
 
 BUNDLED WITH
-   2.3.21
+   2.5.18
