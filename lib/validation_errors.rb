@@ -22,13 +22,13 @@ module ValidationErrors
     end
 
     module InstanceMethods
-      def update(**attributes)
+      def update(attributes)
         super.tap do |result|
           ValidationError.track(self) unless result
         end
       end
 
-      def update!(**attributes)
+      def update!(attributes)
         super
       rescue ActiveRecord::RecordInvalid
         ValidationError.track(self)
