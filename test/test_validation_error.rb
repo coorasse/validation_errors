@@ -115,7 +115,8 @@ class TestValidationError < Minitest::Test
 
   module RailsMock
     def self.application
-      @application ||= OpenStruct.new(config: OpenStruct.new(filter_parameters: [:password, :ssn]))
+      filter_parameters = [:password, :ssn, /password/]
+      @application ||= OpenStruct.new(config: OpenStruct.new(filter_parameters: filter_parameters))
     end
   end
 

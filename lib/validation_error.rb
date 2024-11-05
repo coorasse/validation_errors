@@ -11,16 +11,24 @@ class ValidationError < ActiveRecord::Base
 
   def self.filter_sensible_information(details)
     filter_parameters = if defined?(Rails) && Rails.respond_to?(:application)
-      Rails.application.config.filter_parameters.map(&:to_sym)
+      Rails.application.config.filter_parameters
     else
       []
     end
     filtered_details = details.dup
     filtered_details.each do |column_name, errors|
-      if filter_parameters.include?(column_name.to_sym)
-        errors.each do |error|
-          if error[:value].present?
-            error[:value] = "***"
+      filter_parameters.each do |filter|
+        must_filter = case filter
+                      when Regexp
+                        filter.match?(column_name)
+                      when String, Symbol
+                        filter.to_s == column_name.to_s
+        end
+        if must_filter
+          errors.each do |error|
+            if error[:value].present?
+              error[:value] = "***"
+            end
           end
         end
       end
