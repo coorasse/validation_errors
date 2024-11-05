@@ -184,6 +184,34 @@ group by 1, 2
 FlatValidationError.group(:invalid_model_name, :error_column).count
 ```
 
+## RailsAdmin integration
+
+We provide here some code samples to integrate the models in [RailsAdmin](https://github.com/sferik/rails_admin).
+
+This configuration will give you a basic configuration to work with the validation errors efficiently.
+```ruby
+config.model "ValidationError" do
+  list do
+    include_fields :invalid_model_name, :invalid_model_id, :action, :created_at
+
+    field :details, :string do
+      visible false
+      searchable true
+      filterable true
+    end
+  end
+
+  show do
+    include_fields :invalid_model_name, :invalid_model_id, :action
+
+    field(:created_at)
+    field(:details) do
+      formatted_value { "<pre>#{JSON.pretty_generate(bindings[:object].details)}</pre>".html_safe }
+    end
+  end
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. 
