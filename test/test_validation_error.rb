@@ -55,4 +55,61 @@ class TestValidationError < Minitest::Test
     assert_equal "create", ValidationError.first.action
     assert_equal({"title" => [{"error" => "blank"}]}, ValidationError.first.details)
   end
+
+  def test_that_models_can_track_on_create
+    TrackedBook.create(title: "")
+    assert_equal 1, ValidationError.count
+    assert_equal "TrackedBook", ValidationError.first.invalid_model_name
+    assert_nil ValidationError.first.invalid_model_id
+    assert_equal "create", ValidationError.first.action
+    assert_equal({"title" => [{"error" => "blank"}]}, ValidationError.first.details)
+  end
+
+  def test_that_models_can_track_on_create_bang
+    begin
+      TrackedBook.create!(title: "")
+    rescue
+      ActiveRecord::RecordInvalid
+    end
+    assert_equal 1, ValidationError.count
+    assert_equal "TrackedBook", ValidationError.first.invalid_model_name
+    assert_nil ValidationError.first.invalid_model_id
+    assert_equal "create", ValidationError.first.action
+    assert_equal({"title" => [{"error" => "blank"}]}, ValidationError.first.details)
+  end
+
+  def test_that_models_do_not_track_on_create_if_no_errors
+    TrackedBook.create(title: "The Hobbit")
+    assert_equal 0, ValidationError.count
+  end
+
+  def test_that_models_can_track_on_update
+    book = TrackedBook.create(title: "The Hobbit")
+    book.update(title: "")
+    assert_equal 1, ValidationError.count
+    assert_equal "TrackedBook", ValidationError.first.invalid_model_name
+    assert_equal book.id, ValidationError.first.invalid_model_id
+    assert_equal "update", ValidationError.first.action
+    assert_equal({"title" => [{"error" => "blank"}]}, ValidationError.first.details)
+  end
+
+  def test_that_models_can_track_on_update_bang
+    book = TrackedBook.create(title: "The Hobbit")
+    begin
+      book.update!(title: "")
+    rescue
+      ActiveRecord::RecordInvalid
+    end
+    assert_equal 1, ValidationError.count
+    assert_equal "TrackedBook", ValidationError.first.invalid_model_name
+    assert_equal book.id, ValidationError.first.invalid_model_id
+    assert_equal "update", ValidationError.first.action
+    assert_equal({"title" => [{"error" => "blank"}]}, ValidationError.first.details)
+  end
+
+  def test_that_models_do_not_track_on_update_if_no_errors
+    book = TrackedBook.create(title: "The Hobbit")
+    book.update(title: "Harry Potter")
+    assert_equal 0, ValidationError.count
+  end
 end
