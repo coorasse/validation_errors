@@ -1,7 +1,7 @@
 ## [0.3.0] - 2024-11-05
 
 - Fix persistance in case of rolled back transactions.
-- Filter sensible information by default
+- Filter `Rails.application.config.filter_parameters` by default. Does not support procs. 
 
 ## [0.2.0] - 2022-12-29
 
