@@ -27,7 +27,7 @@ jobs:
         run: bundle install --jobs 4 --retry 3
       
       - name: Run tests
-        run: bundle exec rails test
+        run: bundle exec rake test
 
       - name: Run linters
-        run: bin/fastcheck
+        run: bundle exec standardrb
