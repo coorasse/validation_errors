@@ -101,6 +101,10 @@ class ApplicationRecord < ActiveRecord::Base
 end
 ```
 
+### Validate nested attributes
+
+If you don't specify `accepts_nested_attributes_for` for nested attributes, only a generic `invalid` error will be tracked for associations.
+
 We currently don't support (PR welcome):
 * enable globally and disable on a specific model `skip_track_validation_errors`
 * enable only for specific actions `track_validation_errors only: [:create]`

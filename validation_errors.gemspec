@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name = "validation_errors"
-  spec.version = "0.3.0"
+  spec.version = "0.3.1"
   spec.authors = ["Alessandro Rodi"]
   spec.email = ["rodi@hey.com"]
 
@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "zeitwerk", ">= 2.0.0"
 
   spec.add_development_dependency "sqlite3", "~> 1.5.0"
-  spec.add_development_dependency "standard", "~> 0.13.0"
+  spec.add_development_dependency "standard", "~> 1.31.0"
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "minitest", "~> 5.0"
 end

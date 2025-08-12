@@ -1,3 +1,7 @@
+## [0.3.1] - 2025-08-12
+
+- Documentation changes and some more tests to specify how to track errors on nested associations.
+
 ## [0.3.0] - 2024-11-05
 
 - Fix persistance in case of rolled back transactions.

@@ -20,6 +20,31 @@ class TrackedBook < ActiveRecord::Base
   validates :title, presence: true
 end
 
+class Home < ActiveRecord::Base
+  has_many :soldiers, dependent: :destroy
+
+  validates :address, presence: true
+end
+
+class Soldier < ActiveRecord::Base
+  belongs_to :home, optional: true
+  belongs_to :king
+
+  validates :name, presence: true
+  validates :rank, presence: true
+
+  accepts_nested_attributes_for :home, allow_destroy: true
+end
+
+class King < ActiveRecord::Base
+  has_many :soldiers
+  belongs_to :home, optional: true
+
+  validates :title, presence: true
+
+  accepts_nested_attributes_for :soldiers, allow_destroy: true
+end
+
 ActiveRecord::Base.logger = Logger.new($stdout)
 # ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: ":memory:")
 # connect to a file
@@ -36,6 +61,26 @@ ActiveRecord::Schema.define do
   create_table :users, if_not_exists: true do |t|
     t.string :username
     t.string :password
+    t.timestamps null: false
+  end
+
+  create_table :soldiers, if_not_exists: true do |t|
+    t.string :name
+    t.string :rank
+    t.references :king, foreign_key: true, null: false
+    t.references :home, foreign_key: true, null: true
+    t.timestamps null: false
+  end
+
+  create_table :homes, if_not_exists: true do |t|
+    t.string :address
+
+    t.timestamps null: false
+  end
+
+  create_table :kings, if_not_exists: true do |t|
+    t.references :home, foreign_key: true, null: false
+    t.string :title
     t.timestamps null: false
   end
 

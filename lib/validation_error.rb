@@ -4,9 +4,9 @@ class ValidationError < ActiveRecord::Base
   def self.track(invalid_model, action: invalid_model.persisted? ? "update" : "create")
     details = filter_sensible_information(invalid_model.errors.details)
     create!(invalid_model_name: invalid_model.class.name,
-            invalid_model_id: invalid_model.id,
-            details: details,
-            action: action)
+      invalid_model_id: invalid_model.id,
+      details: details,
+      action: action)
   end
 
   def self.filter_sensible_information(details)
@@ -19,10 +19,10 @@ class ValidationError < ActiveRecord::Base
     filtered_details.each do |column_name, errors|
       filter_parameters.each do |filter|
         must_filter = case filter
-                      when Regexp
-                        filter.match?(column_name)
-                      when String, Symbol
-                        filter.to_s == column_name.to_s
+        when Regexp
+          filter.match?(column_name)
+        when String, Symbol
+          filter.to_s == column_name.to_s
         end
         if must_filter
           errors.each do |error|

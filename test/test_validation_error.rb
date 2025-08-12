@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "test_helper"
 
 class TestValidationError < Minitest::Test
@@ -133,5 +134,19 @@ class TestValidationError < Minitest::Test
     assert_equal "create", ValidationError.first.action
     assert_equal({"password" => [{"error" => "invalid", "value" => "***"}]}, ValidationError.first.details)
     assert_equal("thisissecret", invalid_user.errors.details[:password][0][:value])
+  end
+
+  def test_that_it_can_track_nested_models
+    invalid_king = King.new(id: 1)
+    invalid_king.soldiers.build(name: "Arthur", home: Home.new)
+    invalid_king.valid?
+    ValidationError.track(invalid_king)
+    assert_equal 1, ValidationError.count
+    assert_equal "King", ValidationError.first.invalid_model_name
+    assert_equal 1, ValidationError.first.invalid_model_id
+    assert_equal "create", ValidationError.first.action
+    assert_equal({"title" => [{"error" => "blank"}],
+                       "soldiers.rank" => [{"error" => "blank"}], "soldiers.home.address" => [{"error" => "blank"}]}, ValidationError.first.details)
+    # assert_equal 3, FlatValidationError.count
   end
 end
